@@ -21,6 +21,7 @@ export type OptionType = {
 }
 
 export function DolarProvider({ children, data }: { children: React.ReactNode, data: Dolar[] }) {
+  const [coins, setCoins] = useState<Dolar[]>(data)
   const [from, setFrom] = useState<Casas>('ars')
   const [to, setTo] = useState<Casas >('blue')
   const [toOptions, setToOptions] = useState<Array<OptionType>>([])

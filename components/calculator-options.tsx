@@ -11,15 +11,19 @@ import { shortName } from '@/lib/utils'
 
 const Options = ({ options, value, handleOptionChange }: 
                  { options: OptionType[], value: string, handleOptionChange: (value: Casas)  => void}) => {
-  console.log('value', value)
-  return (
+                
+   return (
     <Select onValueChange={handleOptionChange} defaultValue={value} >
         <SelectTrigger className="w-[180px] bg-white ">
-        <SelectValue placeholder="Seleccionar" className='capitalize'>{shortName(value) || "Seleccionar"}</SelectValue>
+        <SelectValue placeholder="Seleccionar" className='capitalize'>
+          {shortName(value) || "Seleccionar"}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent className='bg-white'>
           {options?.map((option, i) => (
-            <SelectItem key={option.casa + i} value={option.casa} className='capitalize'>{shortName(option.nombre)}</SelectItem>
+            <SelectItem key={option.casa + i} value={option.casa} className='capitalize'>
+              {shortName(option.nombre)}
+            </SelectItem>
           ))}
         </SelectContent>
     </Select>    
