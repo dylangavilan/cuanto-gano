@@ -1,3 +1,4 @@
+import axios from "axios";
 import api from "./axios"
 
 export const getDolarsInfo = async (): Promise<Dolar[]> => {
@@ -9,7 +10,8 @@ export const getDolarInfo = async (casa: Casas): Promise<Dolar> =>{
     const { data } = await api.get<Dolar>(`/dolares/${casa}`);
     return data;
 }
-export const  getDolarByTime = async (tipo: Casas, fecha: Date): Promise<Dolar> => {
-    const { data } = await api.get(`/cotizaciones/dolares/${tipo}/${fecha}`)
+export const getDolarByTime = async (tipo: Casas, fecha: string): Promise<Dolar> => {
+    
+    const { data } = await axios.get(`https://api.argentinadatos.com/v1/cotizaciones/dolares/${tipo}/${fecha}/`)
     return data
 }

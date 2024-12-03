@@ -11,7 +11,7 @@ export default async function Home() {
     <DolarProvider data={dolars}>
       <div className="items-center justify-items-center min-h-screen p-8 pb-20 sm:p-20 flex flex-col gap-4">
         <Suspense fallback={<div>Loading...</div>}>
-          <h1 className='text-center text-2xl'>Cuanto gano¿?</h1>
+          <h1 className='text-center text-2xl'>Cuanto gano este mes¿?</h1>
           <Calculator />
           <DolarInfo list={dolars}  />
         </Suspense>

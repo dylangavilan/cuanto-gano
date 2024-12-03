@@ -4,7 +4,7 @@ import { useDolar } from '@/context'
 import Options from './calculator-options'
 import { ArrowRightLeft } from 'lucide-react'
 import { Input } from './ui/input'
-import { getDolarInfo } from '@/services/services'
+import { getDolarByTime, getDolarInfo } from '@/services/services'
 import Button from './ui/button'
 import CalculatorResult from './calculator-result'
 
@@ -13,14 +13,31 @@ const Calculator = () => {
   const { toOptions, fromOptions, swapOptions, from, to, setFrom, setTo } = useDolar()
   const [value, setValue] = useState<number>(0)
   const [input, setInput] = useState<number>(0)
-
+  const [salaryLastMonth, setSalaryLastMonth] = useState<number>(0)
+  const [percentaje, setPercentage] = useState<number>(0)
   const handleClick = async  () => {
     let data = await getDolarInfo(from !== 'ars' ? from : to)
+    const date = new Date()
+    date.setMonth(date.getMonth() - 1);
+    const formattedDate = date.toLocaleDateString()
+                              .split('/')
+                              .reverse()
+                              .map((el) => (parseInt(el) < 10 ? `0${el}` : el))
+                              .join('/');
+
+    let lastDolar = await getDolarByTime(from !== 'ars' ? from : to, formattedDate)
     if(from === 'ars') {
       setValue(input / data?.venta)
+      setSalaryLastMonth(input / lastDolar.venta)  
+      const percentageChange = ((input / data.venta - input / lastDolar.venta) / (input / lastDolar.venta)) * 100;
+
+      setPercentage(percentageChange)
       return;
     }  
     setValue(input * data?.compra)
+    setSalaryLastMonth(lastDolar.compra * input)
+    const percentageChange = (((data.compra * input) - (lastDolar.compra * input)) / (lastDolar.compra * input)) * 100;
+    setPercentage(percentageChange)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,9 +53,9 @@ const Calculator = () => {
         <Options options={toOptions} value={to} handleOptionChange={setTo}/>
       </div>
       <div className='flex flex-col gap-2'>
-        <Input placeholder='Cuanto cobraste?' type='number' onChange={handleChange}  value={input}/>
+        <Input placeholder='Cuanto cobraste?' type='number' onChange={handleChange} value={input}/>
         <Button onClick={handleClick} size='small'>Calculate</Button>
-        <CalculatorResult result={value} />
+        <CalculatorResult result={value} lastSalary={salaryLastMonth} currency={to} percentaje={percentaje} />
       </div>
     </div>
   )

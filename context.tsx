@@ -27,6 +27,7 @@ export function DolarProvider({ children, data }: { children: React.ReactNode, d
   const [toOptions, setToOptions] = useState<Array<OptionType>>([])
   const [fromOptions, setFromOptions] = useState<Array<OptionType>>([{ nombre: 'Ars', casa: 'ars'}])
   const [isSwapped, setIsSwapped] = useState<boolean>(false);
+
   useEffect(() => {
     const parsedOptions = data.map((el) => ( { nombre:el.nombre, casa:el.casa} ))
     setToOptions(parsedOptions)

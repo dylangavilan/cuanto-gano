@@ -15,3 +15,6 @@ export const shortName = (nombre: string) => {
   }
   return nombre
 }
+export const formatNumber = (num: number) => {
+  return num.toLocaleString('es-AR', {style: 'currency', currency: 'ARS'})
+}
