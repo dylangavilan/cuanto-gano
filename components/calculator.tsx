@@ -1,5 +1,5 @@
 'use client'
-import React, { InputHTMLAttributes, useState } from 'react'
+import React, { useState } from 'react'
 import { useDolar } from '@/context'
 import Options from './calculator-options'
 import { ArrowRightLeft } from 'lucide-react'
@@ -16,7 +16,7 @@ const Calculator = () => {
   const [salaryLastMonth, setSalaryLastMonth] = useState<number>(0)
   const [percentaje, setPercentage] = useState<number>(0)
   const handleClick = async  () => {
-    let data = await getDolarInfo(from !== 'ars' ? from : to)
+    const data = await getDolarInfo(from !== 'ars' ? from : to)
     const date = new Date()
     date.setMonth(date.getMonth() - 1);
     const formattedDate = date.toLocaleDateString()
@@ -25,12 +25,11 @@ const Calculator = () => {
                               .map((el) => (parseInt(el) < 10 ? `0${el}` : el))
                               .join('/');
 
-    let lastDolar = await getDolarByTime(from !== 'ars' ? from : to, formattedDate)
+    const lastDolar = await getDolarByTime(from !== 'ars' ? from : to, formattedDate)
     if(from === 'ars') {
       setValue(input / data?.venta)
       setSalaryLastMonth(input / lastDolar.venta)  
       const percentageChange = ((input / data.venta - input / lastDolar.venta) / (input / lastDolar.venta)) * 100;
-
       setPercentage(percentageChange)
       return;
     }  
@@ -55,7 +54,7 @@ const Calculator = () => {
       <div className='flex flex-col gap-2'>
         <Input placeholder='Cuanto cobraste?' type='number' onChange={handleChange} value={input}/>
         <Button onClick={handleClick} size='small'>Calculate</Button>
-        <CalculatorResult result={value} lastSalary={salaryLastMonth} currency={to} percentaje={percentaje} />
+        <CalculatorResult result={value} lastSalary={salaryLastMonth} currency={toOptions[0].moneda} percentaje={percentaje} />
       </div>
     </div>
   )

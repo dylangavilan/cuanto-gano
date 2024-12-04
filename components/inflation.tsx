@@ -1,7 +1,5 @@
 import React from 'react';
-import { Input } from './ui/input';
-import Options from './calculator-options';
-import Button from './ui/button';
+
 const Inflation: React.FC = () => {
     return (
         <div>
