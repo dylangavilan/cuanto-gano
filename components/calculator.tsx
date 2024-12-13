@@ -15,6 +15,7 @@ const Calculator = () => {
   const [input, setInput] = useState<number>(0)
   const [salaryLastMonth, setSalaryLastMonth] = useState<number>(0)
   const [percentaje, setPercentage] = useState<number>(0)
+  
   const handleClick = async  () => {
     const data = await getDolarInfo(from !== 'ars' ? from : to)
     const date = new Date()
@@ -24,7 +25,7 @@ const Calculator = () => {
                               .reverse()
                               .map((el) => (parseInt(el) < 10 ? `0${el}` : el))
                               .join('/');
-
+    console.log(formattedDate)
     const lastDolar = await getDolarByTime(from !== 'ars' ? from : to, formattedDate)
     if(from === 'ars') {
       setValue(input / data?.venta)
@@ -54,7 +55,7 @@ const Calculator = () => {
       <div className='flex flex-col gap-2'>
         <Input placeholder='Cuanto cobraste?' type='number' onChange={handleChange} value={input}/>
         <Button onClick={handleClick} size='small'>Calculate</Button>
-        <CalculatorResult result={value} lastSalary={salaryLastMonth} currency={toOptions[0].moneda} percentaje={percentaje} />
+        <CalculatorResult result={value} lastSalary={salaryLastMonth} currency={toOptions[0]?.moneda} percentaje={percentaje} />
       </div>
     </div>
   )
