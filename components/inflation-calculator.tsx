@@ -9,7 +9,6 @@ import DropdownOptions from './stadistic-options'
 import { years } from '@/constants'
 import { months } from '@/constants'
 import { getDolarByTime } from '@/services/services'
-import Inflation from './inflation'
 import InflationTable from './inflation-table'
 
 type Row = {  
@@ -62,7 +61,6 @@ export default function PriceCalculator() {
       row.id === id ? { ...row, [field]: value } : row
     ))
   }
-  console.log(results)
   return (
     <>
       <Card className="w-full max-w-2xl mx-auto">
