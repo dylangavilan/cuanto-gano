@@ -29,7 +29,7 @@ export type OptionType = {
 export function DolarProvider({ children, data }: { children: React.ReactNode, data: Dolar[] }) {
   const [from, setFrom] = useState<Casas>('ars')
   const [to, setTo] = useState<Casas >('blue')
-  const [toOptions, setToOptions] = useState<Array<OptionType>>([])
+  const [toOptions, setToOptions] = useState<Array<OptionType>>([{ casa: 'ars', nombre: 'Pesos', moneda: 'ARS' }])  
   const [fromOptions, setFromOptions] = useState<Array<OptionType>>([])
   const [isSwapped, setIsSwapped] = useState<boolean>(false);
 

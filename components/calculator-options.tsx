@@ -18,13 +18,14 @@ interface Props {
 
 const Options = ({ options, value, handleOptionChange }: Props) => {
    return (
-    <Select onValueChange={handleOptionChange} defaultValue={value} >
+    <Select onValueChange={handleOptionChange} defaultValue={value}  
+            disabled={options.length === 0}> 
         <SelectTrigger className="w-[180px] bg-white ">
         <SelectValue placeholder="Seleccionar" className='capitalize'>
           {shortName(value)}
           </SelectValue>
         </SelectTrigger>
-        <SelectContent className='bg-white'>
+        <SelectContent className='bg-white' >
           {options?.map((option, i) => (
             <SelectItem key={option.casa + i} value={option.casa} className='capitalize'>
               {shortName(option.nombre)}
