@@ -10,7 +10,7 @@ export default async function Home() {
   return (
     <>
     <DolarProvider data={dolars}>
-      <div className="flex flex-col max-w-screen-md mx-auto gap-4 p-20">
+      <div className="flex flex-col max-w-screen-lg mx-auto gap-4 p-20">
         <Suspense fallback={<div>Loading...</div>}>
           <h1 className='text-center text-2xl'>Cuanto gano este mes¿?</h1>
           <Calculator />

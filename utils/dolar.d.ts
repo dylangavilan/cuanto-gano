@@ -7,4 +7,9 @@ type Dolar = {
     casa: Casas
 }
 
+type Ars = {
+    nombre: string
+    moneda: "ARS"
+    casa: Casas
+}
 type Casas = 'oficial' | 'contadoconliqui' | 'blue' | 'tarjeta' | 'ars';

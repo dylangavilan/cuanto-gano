@@ -1,17 +1,20 @@
 'use client'
 
 import React, { createContext, useContext, useEffect, useState, } from 'react'
+import { DolarMapper } from './utils/dolar.mapper'
 
-
-interface DolarContextType {
-  from: Casas | 'ars'
-  to: Casas | 'ars'
-  setFrom: (from: Casas | 'ars') => void
-  setTo: (from: Casas | 'ars') => void
+interface State {
+  from: Casas
+  to: Casas
   toOptions: OptionType[]
   fromOptions: OptionType[]
-  swapOptions: () => void
   isSwapped: boolean
+}
+
+interface DolarContextType extends State {
+  setFrom: (from: Casas | 'ars') => void
+  setTo: (from: Casas | 'ars') => void
+  swapOptions: () => void
 }
 
 const DolarContext = createContext<DolarContextType | undefined>(undefined)
@@ -22,19 +25,16 @@ export type OptionType = {
   moneda: 'USD' | 'ARS' 
 }
 
-const arsCoin: OptionType = { nombre: 'Ars', casa: 'ars' as Casas, moneda: 'ARS' }
-const defaultUSDCoin: OptionType = { nombre: 'usd', casa: 'blue' as Casas, moneda: 'USD' }
 
 export function DolarProvider({ children, data }: { children: React.ReactNode, data: Dolar[] }) {
   const [from, setFrom] = useState<Casas>('ars')
   const [to, setTo] = useState<Casas >('blue')
-  const [toOptions, setToOptions] = useState<Array<OptionType>>([defaultUSDCoin])
-  const [fromOptions, setFromOptions] = useState<Array<OptionType>>([arsCoin])
+  const [toOptions, setToOptions] = useState<Array<OptionType>>([])
+  const [fromOptions, setFromOptions] = useState<Array<OptionType>>([])
   const [isSwapped, setIsSwapped] = useState<boolean>(false);
 
   useEffect(() => {
-    const parsedOptions = data.map(({moneda, casa, nombre}) => ( {nombre, casa, moneda } ))
-    setToOptions(parsedOptions)
+    setToOptions(data.map(DolarMapper.mapCurrencyToOption))
   }, [data])
 
   const swapOptions = () => {

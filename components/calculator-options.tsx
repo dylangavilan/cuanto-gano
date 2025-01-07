@@ -9,14 +9,19 @@ import {
   } from "@/components/ui/select"
 import { shortName } from '@/lib/utils'
 
-const Options = ({ options, value, handleOptionChange }: 
-                 { options: OptionType[], value: string, handleOptionChange: (value: Casas)  => void}) => {
-                
+
+interface Props {
+    options: OptionType[]
+    value: string
+    handleOptionChange: (value: Casas) => void
+}
+
+const Options = ({ options, value, handleOptionChange }: Props) => {
    return (
     <Select onValueChange={handleOptionChange} defaultValue={value} >
         <SelectTrigger className="w-[180px] bg-white ">
         <SelectValue placeholder="Seleccionar" className='capitalize'>
-          {shortName(value) || "Seleccionar"}
+          {shortName(value)}
           </SelectValue>
         </SelectTrigger>
         <SelectContent className='bg-white'>

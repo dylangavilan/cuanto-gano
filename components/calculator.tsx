@@ -17,7 +17,8 @@ const Calculator = () => {
   const [percentaje, setPercentage] = useState<number>(0)
   
   const handleClick = async  () => {
-    const data = await getDolarInfo(from !== 'ars' ? from : to)
+    const casa = from !== 'ars' ? from : to
+    const data = await getDolarInfo(casa)
     const date = new Date()
     date.setMonth(date.getMonth() - 1);
     const formattedDate = date.toLocaleDateString()
@@ -25,8 +26,9 @@ const Calculator = () => {
                               .reverse()
                               .map((el) => (parseInt(el) < 10 ? `0${el}` : el))
                               .join('/');
-    console.log(formattedDate)
-    const lastDolar = await getDolarByTime(from !== 'ars' ? from : to, formattedDate)
+
+    const lastDolar = await getDolarByTime(casa, formattedDate)
+
     if(from === 'ars') {
       setValue(input / data?.venta)
       setSalaryLastMonth(input / lastDolar.venta)  
@@ -41,6 +43,9 @@ const Calculator = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(parseInt(e.target.value) === 0) {
+      return setInput(0)
+    }
     setInput(parseFloat(e.target.value))
   }
 
@@ -49,12 +54,12 @@ const Calculator = () => {
     <div className='flex flex-col gap-2 max-w-96 justify-center mx-auto'>
       <div className='flex gap-2'>
         <Options options={fromOptions} value={from} handleOptionChange={setFrom}/>
-        <Button onClick={() => {swapOptions(); setValue(0)}} size='small' variant='secondary'> <ArrowRightLeft className='h-4 w-4'/> </Button>
+        <Button onClick={() => { swapOptions(); setValue(0)}} size='small' variant='secondary'> <ArrowRightLeft className='h-4 w-4'/> </Button>
         <Options options={toOptions} value={to} handleOptionChange={setTo}/>
       </div>
       <div className='flex flex-col gap-2'>
         <Input placeholder='Cuanto cobraste?' type='number' onChange={handleChange} value={input}/>
-        <Button onClick={handleClick} variant='primary' size='small'>Calculate</Button>
+        <Button onClick={handleClick} variant='primary' size='small'>Calcular</Button>
         <CalculatorResult result={value} lastSalary={salaryLastMonth} currency={toOptions[0]?.moneda} percentaje={percentaje} />
       </div>
     </div>
