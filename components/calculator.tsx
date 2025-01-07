@@ -46,7 +46,7 @@ const Calculator = () => {
 
 
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 max-w-96 justify-center mx-auto'>
       <div className='flex gap-2'>
         <Options options={fromOptions} value={from} handleOptionChange={setFrom}/>
         <Button onClick={() => {swapOptions(); setValue(0)}} size='small' variant='secondary'> <ArrowRightLeft className='h-4 w-4'/> </Button>
@@ -54,7 +54,7 @@ const Calculator = () => {
       </div>
       <div className='flex flex-col gap-2'>
         <Input placeholder='Cuanto cobraste?' type='number' onChange={handleChange} value={input}/>
-        <Button onClick={handleClick} size='small'>Calculate</Button>
+        <Button onClick={handleClick} variant='primary' size='small'>Calculate</Button>
         <CalculatorResult result={value} lastSalary={salaryLastMonth} currency={toOptions[0]?.moneda} percentaje={percentaje} />
       </div>
     </div>
